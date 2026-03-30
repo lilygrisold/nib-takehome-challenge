@@ -3,53 +3,51 @@ import { useShoppingList } from './hooks/useShoppingList';
 import Navigation from './components/Navigation';
 import styled from 'styled-components';
 import type { ViewState } from './types';
+import SearchBar from './components/SearchBar';
 
 const App = () => {
-  const { items, isLoaded, addIngredients, removeItem,
-    getItemCount } = useShoppingList();
-    useEffect(() => {
-      if (isLoaded) {
-        // Test adding ingredients
-        addIngredients([
-        { name: 'Chicken', measure: '500g' },
-        { name: 'Rice', measure: '1 cup' },
-        { name: 'chicken', measure: '2 breasts' }, // Test aggregation
-        ]);
-      }
-    }, [isLoaded]);
 
-    useEffect(() => {
-      console.log('Shopping list:', items);
-      console.log('Item count:', getItemCount());
-    }, [items]);
+  const { items, isLoaded, addIngredients, removeItem, getItemCount } = useShoppingList();
+  
+  const [isLoading, setIsLoading] = useState(false);
+    
+  const handleSearch = (query: string) => {
+    console.log('Searching for:', query);
+    setIsLoading(true);
+    setTimeout(() => setIsLoading(false), 1000);
+  };
+  const handleSurpriseMe = () => {
+    console.log('Surprise me!');
+    setIsLoading(true);
+    setTimeout(() => setIsLoading(false), 1000);
+  };
 
-    const [currentView, setCurrentView] = useState<ViewState>('search');
+  useEffect(() => {
+    console.log('Shopping list:', items);
+    console.log('Item count:', getItemCount());
+  }, [items]);
+
+  const [currentView, setCurrentView] = useState<ViewState>('search');
 
  return (
   <AppContainer>
       <Navigation
         currentView={currentView}
         onViewChange={setCurrentView}
-        shoppingListCount={5}
+        shoppingListCount={getItemCount()}
       />
       <MainContent>
         <ViewText>Current view: {currentView}</ViewText>
-      </MainContent>
-    {/* <div>
-      <h1>Shopping List ({getItemCount()})</h1>
-        {items.map(item => (
-          <div key={item.name}>
-            {item.name}: 
-            {item.measures
-              .map(m => m.original)
-              .filter((value, index, self) => self.indexOf(value) === index) // dedupe
-              .join(', ')}
-          </div>
-      ))}
-    </div> */}
+        <SearchContainer>
+          <SearchBar
+            onSearch={handleSearch}
+            onSurpriseMe={handleSurpriseMe}
+            isLoading={isLoading}
+          />
+        </SearchContainer>
+      </MainContent>    
     </AppContainer>
  );
-
 }
 
 export default App;
@@ -68,7 +66,7 @@ const MainContent = styled.main`
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
-  
+
   @media (min-width: 1024px) {
     padding-left: 2rem;
     padding-right: 2rem;
@@ -77,4 +75,12 @@ const MainContent = styled.main`
 
 const ViewText = styled.p`
   color: inherit;
+`;
+
+const SearchContainer = styled.div`
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 48rem; 
+  margin-left: auto;  
+  margin-right: auto; 
 `;
