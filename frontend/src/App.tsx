@@ -4,11 +4,27 @@ import Navigation from './components/Navigation';
 import styled from 'styled-components';
 import type { ViewState } from './types';
 import SearchBar from './components/SearchBar';
+import RecipeCard from './components/RecipeCard';
 
 const App = () => {
 
   const { items, isLoaded, addIngredients, removeItem, getItemCount } = useShoppingList();
   
+  const sampleRecipe: Recipe = {
+    id: '52772',
+    title: 'Teriyaki Chicken Casserole',
+    category: 'Chicken',
+    area: 'Japanese',
+    instructions: 'Cook chicken...',
+    image: 'https://www.themealdb.com/images/media/meals/wvpsxx1468256321.jpg',
+    youtube: null,
+    source: null,
+    ingredients: [
+    { name: 'Chicken', measure: '500g' },
+    { name: 'Soy Sauce', measure: '3 tbsp' },
+    ],
+  };
+
   const [isLoading, setIsLoading] = useState(false);
     
   const handleSearch = (query: string) => {
@@ -45,6 +61,13 @@ const App = () => {
             isLoading={isLoading}
           />
         </SearchContainer>
+
+         <CardTestWrapper>
+          <RecipeCard
+            recipe={sampleRecipe}
+            onClick={() => console.log('Clicked:', sampleRecipe.title)}
+          />
+        </CardTestWrapper>
       </MainContent>    
     </AppContainer>
  );
@@ -83,4 +106,9 @@ const SearchContainer = styled.div`
   max-width: 48rem; 
   margin-left: auto;  
   margin-right: auto; 
+`;
+
+const CardTestWrapper = styled.div`
+  max-width: 24rem;
+  margin: 2rem auto 0; 
 `;

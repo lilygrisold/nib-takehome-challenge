@@ -109,3 +109,11 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+.line-clamp-2 {
+ display: -webkit-box;
+ -webkit-line-clamp: 2;
+ line-clamp: 2; /* just to silence warning */
+ -webkit-box-orient: vertical;
+ overflow: hidden;
+}
