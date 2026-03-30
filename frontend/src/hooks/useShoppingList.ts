@@ -72,7 +72,7 @@ const parseMeasure = (measureStr: string): ParsedMeasure => {
     }
     
     return {
-      amount: isNaN(amount) ? 0 : amount,
+      amount: isNaN(amount) ? 0 : amount, // Handle NaN, return amount
       unit: unit.trim(),
       original
     };
@@ -118,6 +118,7 @@ const addIngredients = useCallback((ingredients: Ingredient[]) => {
     });
 }, []);
 
+    // Remove when user clears the list
     const removeItem = useCallback((name: string) => {
         setItems((prevItems) =>
         prevItems.filter(
@@ -128,6 +129,8 @@ const addIngredients = useCallback((ingredients: Ingredient[]) => {
         const clearList = useCallback(() => {
         setItems([]);
     }, []);
+
+    // Amount of items in list for "X in shopping list"
     const getItemCount = useCallback(() => {
         return items.length;
     }, [items]);
