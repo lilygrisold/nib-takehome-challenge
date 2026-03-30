@@ -9,7 +9,7 @@ gem "puma", ">= 5.0"
 # HTTP client for API requests - kind of overkill for this app, but wanted to reflect production readiness
 gem 'faraday', '~> 2.9'
 # CORS support
-gem 'rack-cors', '~> 2.0'
+gem 'rack-cors', '~> 3.0'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
