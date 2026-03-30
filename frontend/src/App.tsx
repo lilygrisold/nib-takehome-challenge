@@ -1,19 +1,41 @@
 import { useEffect } from 'react';
-import { searchRecipes, getRandomRecipe } from './services/api';
+import { useShoppingList } from './hooks/useShoppingList';
+
 
 const App = () => {
-  useEffect(() => {
-    // Test search
-    searchRecipes('chicken').then(recipes => {
-      console.log('Search results:', recipes);
-    });
-    // Test random
-    getRandomRecipe().then(recipe => {
-      console.log('Random recipe:', recipe);
-    });
-  }, []);
+  const { items, isLoaded, addIngredients, removeItem,
+    getItemCount } = useShoppingList();
+    useEffect(() => {
+      if (isLoaded) {
+        // Test adding ingredients
+        addIngredients([
+        { name: 'Chicken', measure: '500g' },
+        { name: 'Rice', measure: '1 cup' },
+        { name: 'chicken', measure: '2 breasts' }, // Test aggregation
+        ]);
+      }
+    }, [isLoaded]);
 
-  return <div>Inspect page console for API results</div>;
+    useEffect(() => {
+      console.log('Shopping list:', items);
+      console.log('Item count:', getItemCount());
+    }, [items]);
+
+ return (
+    <div>
+      <h1>Shopping List ({getItemCount()})</h1>
+        {items.map(item => (
+          <div key={item.name}>
+            {item.name}: 
+            {item.measures
+              .map(m => m.original)
+              .filter((value, index, self) => self.indexOf(value) === index) // dedupe
+              .join(', ')}
+          </div>
+      ))}
+    </div>
+ );
+
 }
 
 export default App;
