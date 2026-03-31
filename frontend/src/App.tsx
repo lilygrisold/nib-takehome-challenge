@@ -11,37 +11,6 @@ import ShoppingListModal from './components/ShoppingListModal';
 
 const App = () => {
   const { items, isLoaded, addIngredients, removeItem, clearList, getItemCount } = useShoppingList();
-  // Sample items for testing
-  const sampleItems: ShoppingListItem[] = [
-  { 
-    name: 'Chicken Breast', 
-    measures: [
-      { amount: 500, unit: 'g', original: '500g' },
-      { amount: 2, unit: 'pieces', original: '2 pieces' }
-    ] 
-  },
-  { 
-    name: 'Rice', 
-    measures: [
-      { amount: 1, unit: 'cup', original: '1 cup' }
-    ] 
-  },
-  { 
-    name: 'Soy Sauce', 
-    measures: [
-      { amount: 3, unit: 'tbsp', original: '3 tbsp' }
-    ] 
-  },
-  { 
-    name: 'Garlic', 
-    measures: [
-      { amount: 3, unit: 'cloves', original: '3 cloves' }
-    ] 
-  },
-];
-
-  const [testItems, setTestItems] = useState(sampleItems);
-
   
   // State for modal
   const [isOpen, setIsOpen] = useState(false);
@@ -67,7 +36,6 @@ const App = () => {
     { name: 'Soy Sauce', measure: '3 tbsp' },
     ],
   };
-    
 
   const handleSearch = (query: string) => {
     console.log('Searching for:', query);
@@ -82,9 +50,9 @@ const App = () => {
   };
 
   useEffect(() => {
-    console.log('Shopping list:', testItems);
+    console.log('Shopping list:', items);
     console.log('Item count:', getItemCount());
-  }, [testItems]);
+  }, [items]);
 
   const [currentView, setCurrentView] = useState<ViewState>('search');
 
@@ -102,11 +70,10 @@ const App = () => {
         currentView={currentView}
         onViewChange={setCurrentView}
         shoppingListCount={getItemCount()}
+        onShoppingListClick={() => setIsShoppingOpen(true)}
       />
 
       <MainContent>
-        <ViewText>Current view: {currentView}</ViewText>
-
         <SearchContainer>
           <SearchBar
             onSearch={handleSearch}
@@ -115,15 +82,12 @@ const App = () => {
           />
         </SearchContainer>
 
-        <CardButton onClick={() => setIsOpen(true)}>
-          <CardTestWrapper>
-            <RecipeCard
-              recipe={sampleRecipe}
-              onClick={() => console.log('Clicked:', sampleRecipe.title)}
-            />
-          </CardTestWrapper>
-          
-        </CardButton>
+        <CardTestWrapper>
+          <RecipeCard
+            recipe={sampleRecipe}
+            onClick={() => setIsOpen(true)} // Just opens the modal
+          />
+        </CardTestWrapper>
 
         <RecipeModal
           recipe={sampleRecipe}
@@ -134,10 +98,6 @@ const App = () => {
             setIsOpen(false);
           }}
         />
-
-      <TestButton onClick={() => setIsShoppingOpen(true)}>
-        Open Shopping List
-      </TestButton>
       <ShoppingListModal
         items={items}
         isOpen={isShoppingOpen}
@@ -173,10 +133,6 @@ const MainContent = styled.main`
   }
 `;
 
-const ViewText = styled.p`
-  color: inherit;
-`;
-
 const SearchContainer = styled.div`
   margin-top: 2rem;
   width: 100%;
@@ -188,30 +144,4 @@ const SearchContainer = styled.div`
 const CardTestWrapper = styled.div`
   max-width: 24rem;
   margin: 0.3rem auto 0; 
-`;
-
-const CardButton = styled.button`
-  display: block;
-  margin: 2rem auto 0;
-  background-color: #fff;
-  color: white;
-  border: none;
-  border-radius: 0.75rem;
-  font-weight: 500;
-  cursor: pointer;
-`;
-const TestButton = styled.button`
-  display: block;
-  margin: 2rem auto 0;
-  padding: 0.75rem 1.5rem; 
-  background-color: #2563eb; 
-  color: white; 
-  border: none;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  cursor: pointer;
-  
-  &:hover {
-    background-color: #1d4ed8;
-  }
 `;

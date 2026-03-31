@@ -7,9 +7,10 @@ interface NavigationProps {
   currentView: ViewState;
   onViewChange: (view: ViewState) => void;
   shoppingListCount: number;
+  onShoppingListClick: () => void;
 }
 
-const Navigation = ({ currentView, onViewChange, shoppingListCount }: NavigationProps) => {
+const Navigation = ({ currentView, onViewChange, shoppingListCount, onShoppingListClick }: NavigationProps) => {
   return (
     <NavBar>
       <Container>
@@ -31,7 +32,7 @@ const Navigation = ({ currentView, onViewChange, shoppingListCount }: Navigation
             
             <NavButton 
               $isActive={currentView === 'shopping-list'} 
-              onClick={() => onViewChange('shopping-list')}
+              onClick={onShoppingListClick}
               aria-pressed={currentView === 'shopping-list'}
             >
               <ShoppingCart style={{ height: '1.25rem', width: '1.25rem' }} />
