@@ -2,21 +2,55 @@ import { useEffect, useState } from 'react';
 import { useShoppingList } from './hooks/useShoppingList';
 import Navigation from './components/Navigation';
 import styled from 'styled-components';
-import type { ViewState, Recipe, Ingredient } from './types';
+import type { ViewState, Recipe, Ingredient, ShoppingListItem } from './types';
 import SearchBar from './components/SearchBar';
 import RecipeCard from './components/RecipeCard';
 import RecipeModal from './components/RecipeModal';
+import ShoppingListModal from './components/ShoppingListModal';
 
 
 const App = () => {
+  const { items, isLoaded, addIngredients, removeItem, clearList, getItemCount } = useShoppingList();
+  // Sample items for testing
+  const sampleItems: ShoppingListItem[] = [
+  { 
+    name: 'Chicken Breast', 
+    measures: [
+      { amount: 500, unit: 'g', original: '500g' },
+      { amount: 2, unit: 'pieces', original: '2 pieces' }
+    ] 
+  },
+  { 
+    name: 'Rice', 
+    measures: [
+      { amount: 1, unit: 'cup', original: '1 cup' }
+    ] 
+  },
+  { 
+    name: 'Soy Sauce', 
+    measures: [
+      { amount: 3, unit: 'tbsp', original: '3 tbsp' }
+    ] 
+  },
+  { 
+    name: 'Garlic', 
+    measures: [
+      { amount: 3, unit: 'cloves', original: '3 cloves' }
+    ] 
+  },
+];
 
-  const { items, isLoaded, addIngredients, removeItem, getItemCount } = useShoppingList();
+  const [testItems, setTestItems] = useState(sampleItems);
+
   
   // State for modal
   const [isOpen, setIsOpen] = useState(false);
 
   // State for loading
   const [isLoading, setIsLoading] = useState(false);
+
+  // State for opening shopping list
+  const [isShoppingOpen, setIsShoppingOpen] = useState(false);
 
   // Example recipe for testing
   const sampleRecipe: Recipe = {
@@ -48,12 +82,20 @@ const App = () => {
   };
 
   useEffect(() => {
-    console.log('Shopping list:', items);
+    console.log('Shopping list:', testItems);
     console.log('Item count:', getItemCount());
-  }, [items]);
+  }, [testItems]);
 
   const [currentView, setCurrentView] = useState<ViewState>('search');
 
+  useEffect(() => {
+  if (isLoaded && items.length === 0) {
+    addIngredients([
+      { name: 'Chicken Breast', measure: '500g' },
+      { name: 'Rice', measure: '1 cup' },
+    ]);
+  }
+}, [isLoaded]);
  return (
   <AppContainer>
       <Navigation
@@ -73,25 +115,36 @@ const App = () => {
           />
         </SearchContainer>
 
-         <CardTestWrapper>
-          <RecipeCard
-            recipe={sampleRecipe}
-            onClick={() => console.log('Clicked:', sampleRecipe.title)}
-          />
-        </CardTestWrapper>
-
-        <TestButton onClick={() => setIsOpen(true)}>
-          Open Recipe
-          </TestButton>
+        <CardButton onClick={() => setIsOpen(true)}>
+          <CardTestWrapper>
+            <RecipeCard
+              recipe={sampleRecipe}
+              onClick={() => console.log('Clicked:', sampleRecipe.title)}
+            />
+          </CardTestWrapper>
+          
+        </CardButton>
 
         <RecipeModal
           recipe={sampleRecipe}
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}
           onAddToShoppingList={(ingredients) => {
-            console.log('Adding to shopping list:', ingredients);
+            addIngredients(ingredients); 
+            setIsOpen(false);
           }}
         />
+
+      <TestButton onClick={() => setIsShoppingOpen(true)}>
+        Open Shopping List
+      </TestButton>
+      <ShoppingListModal
+        items={items}
+        isOpen={isShoppingOpen}
+        onClose={() => setIsShoppingOpen(false)}
+        onRemoveItem={removeItem}
+        onClearList={clearList}
+      />
       </MainContent>    
   </AppContainer>
  );
@@ -134,17 +187,27 @@ const SearchContainer = styled.div`
 
 const CardTestWrapper = styled.div`
   max-width: 24rem;
-  margin: 2rem auto 0; 
+  margin: 0.3rem auto 0; 
 `;
 
+const CardButton = styled.button`
+  display: block;
+  margin: 2rem auto 0;
+  background-color: #fff;
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+`;
 const TestButton = styled.button`
   display: block;
   margin: 2rem auto 0;
-  padding: 0.5rem 1rem;
-  background-color: #2563eb;
-  color: white;
+  padding: 0.75rem 1.5rem; 
+  background-color: #2563eb; 
+  color: white; 
   border: none;
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   font-weight: 500;
   cursor: pointer;
   

@@ -1,6 +1,5 @@
 import { useEffect, useCallback } from 'react';
 import { X , Video, ExternalLink, Plus, ChefHat } from 'lucide-react';
-import * as Lucide from 'lucide-react';
 import type { Recipe, Ingredient } from '../types';
 import styled from 'styled-components';
 
@@ -31,7 +30,6 @@ const RecipeModal = ({ recipe, isOpen, onClose, onAddToShoppingList }: RecipeMod
 
   if (!isOpen || !recipe) return null;
 
-    console.log(Object.keys(Lucide).filter(k => k.toLowerCase().includes('youtube')));
 
   return (
     <ModalOverlay role="dialog" aria-modal="true" aria-labelledby="recipe-modal-title">
@@ -61,7 +59,6 @@ const RecipeModal = ({ recipe, isOpen, onClose, onAddToShoppingList }: RecipeMod
         </HeaderSection>
 
         <ContentSection>
-          <TwoColumnGrid>
             <Column>
               <SectionTitle>Ingredients</SectionTitle>
               <IngredientsList>
@@ -79,9 +76,7 @@ const RecipeModal = ({ recipe, isOpen, onClose, onAddToShoppingList }: RecipeMod
                 <Plus style={{ height: '1.25rem', width: '1.25rem' }} />
                 <span>Add to Shopping List</span>
               </AddButton>
-            </Column>
-
-            <Column>
+    
               <SectionTitle>Instructions</SectionTitle>
               <InstructionsContent>
                 {recipe.instructions.split('\n').map((paragraph, index) => (
@@ -118,7 +113,7 @@ const RecipeModal = ({ recipe, isOpen, onClose, onAddToShoppingList }: RecipeMod
                 )}
               </LinksContainer>
             </Column>
-          </TwoColumnGrid>
+         
         </ContentSection>
       </ModalContainer>
     </ModalOverlay>
@@ -223,16 +218,9 @@ const ContentSection = styled.div`
   max-height: calc(90vh - 16rem);
 `;
 
-const TwoColumnGrid = styled.div`
-  display: grid;
-  gap: 2rem;
-  
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
+const Column = styled.div`
+    margin: 1.5rem;
 `;
-
-const Column = styled.div``;
 
 const SectionTitle = styled.h3`
   font-size: 1.25rem;
@@ -241,16 +229,18 @@ const SectionTitle = styled.h3`
 `;
 
 const IngredientsList = styled.ul`
+
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 `;
 
 const IngredientItem = styled.li`
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0;
+  padding: 1.5rem;
   border-bottom: 1px solid #f3f4f6;
 `;
 
