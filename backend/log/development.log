@@ -118,3 +118,102 @@ Processing by Api::V1::RecipesController#random as */*
 Completed 200 OK in 837ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
 
 
+Started GET "/api/v1/recipes/random" for ::1 at 2026-03-31 15:54:34 +1100
+Processing by Api::V1::RecipesController#random as */*
+Completed 200 OK in 759ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/recipes/search?query=beef" for ::1 at 2026-03-31 15:54:39 +1100
+Processing by Api::V1::RecipesController#search as */*
+  Parameters: {"query" => "beef"}
+Completed 200 OK in 1256ms (Views: 0.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/recipes/random" for ::1 at 2026-03-31 15:56:06 +1100
+Processing by Api::V1::RecipesController#random as */*
+Completed 200 OK in 855ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/recipes/search?query=beef" for ::1 at 2026-03-31 15:56:11 +1100
+Processing by Api::V1::RecipesController#search as */*
+  Parameters: {"query" => "beef"}
+Completed 200 OK in 482ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/recipes/search?query=beef" for ::1 at 2026-03-31 15:57:22 +1100
+Processing by Api::V1::RecipesController#search as */*
+  Parameters: {"query" => "beef"}
+Completed 200 OK in 1025ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/recipes/search?query=beef" for ::1 at 2026-03-31 15:59:30 +1100
+Processing by Api::V1::RecipesController#search as */*
+  Parameters: {"query" => "beef"}
+Completed 200 OK in 1704ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/recipes/search?query=beef" for ::1 at 2026-03-31 16:00:36 +1100
+Processing by Api::V1::RecipesController#search as */*
+  Parameters: {"query" => "beef"}
+Completed 200 OK in 1468ms (Views: 2.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/recipes/search?query=beef" for ::1 at 2026-03-31 16:15:05 +1100
+Processing by Api::V1::RecipesController#search as */*
+  Parameters: {"query" => "beef"}
+Completed 200 OK in 1675ms (Views: 1.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/recipes/search?query=beef" for ::1 at 2026-03-31 16:18:43 +1100
+  [1m[36mActiveRecord::SchemaMigration Load (1.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Backend'*/[0m
+Processing by Api::V1::RecipesController#search as */*
+  Parameters: {"query" => "beef"}
+Completed 200 OK in 1347ms (Views: 0.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/recipes/search?query=beef" for ::1 at 2026-03-31 16:19:25 +1100
+Processing by Api::V1::RecipesController#search as */*
+  Parameters: {"query" => "beef"}
+Completed 200 OK in 1386ms (Views: 0.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/recipes/search?query=beef" for ::1 at 2026-03-31 16:56:48 +1100
+  [1m[36mActiveRecord::SchemaMigration Load (1.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Backend'*/[0m
+  
+NameError (uninitialized constant MealDbClient::NotFoundError):
+  
+app/controllers/api/v1/recipes_controller.rb:4:in '<class:RecipesController>'
+app/controllers/api/v1/recipes_controller.rb:3:in '<module:V1>'
+app/controllers/api/v1/recipes_controller.rb:2:in '<module:Api>'
+app/controllers/api/v1/recipes_controller.rb:1:in '<main>'
+Started GET "/api/v1/recipes/random" for ::1 at 2026-03-31 17:01:17 +1100
+  [1m[36mActiveRecord::SchemaMigration Load (1.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Backend'*/[0m
+  
+NameError (uninitialized constant MealDbClient::ApiError):
+  
+app/controllers/api/v1/recipes_controller.rb:5:in '<class:RecipesController>'
+app/controllers/api/v1/recipes_controller.rb:3:in '<module:V1>'
+app/controllers/api/v1/recipes_controller.rb:2:in '<module:Api>'
+app/controllers/api/v1/recipes_controller.rb:1:in '<main>'
+Started GET "/api/v1/recipes/random" for ::1 at 2026-03-31 17:02:52 +1100
+  [1m[36mActiveRecord::SchemaMigration Load (1.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Backend'*/[0m
+Processing by Api::V1::RecipesController#random as */*
+Completed 500 Internal Server Error in 5ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+NoMethodError (undefined method 'random' for class MealDbClient):
+  
+app/controllers/api/v1/recipes_controller.rb:17:in 'Api::V1::RecipesController#random'
+Started GET "/api/v1/recipes/random" for ::1 at 2026-03-31 17:16:39 +1100
+  [1m[36mActiveRecord::SchemaMigration Load (1.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Backend'*/[0m
+Processing by Api::V1::RecipesController#random as */*
+Completed 200 OK in 988ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/api/v1/recipes/search?query=beef" for ::1 at 2026-03-31 17:16:48 +1100
+Processing by Api::V1::RecipesController#search as */*
+  Parameters: {"query" => "beef"}
+Completed 200 OK in 1473ms (Views: 0.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.6ms)
+
+

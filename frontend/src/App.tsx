@@ -8,6 +8,9 @@ import RecipeCard from './components/RecipeCard';
 import RecipeModal from './components/RecipeModal';
 import ShoppingListModal from './components/ShoppingListModal';
 import { searchRecipes, getRandomRecipe } from './services/api';
+import LoadingSkeleton from './components/LoadingSkeleton';
+import Toast from './components/Toast';
+import { useToast } from './hooks/useToast';
 
 
 const App = () => {
@@ -30,6 +33,10 @@ const App = () => {
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
   // State to control view
   const [currentView, setCurrentView] = useState<ViewState>('search');
+
+
+  // Toast
+  const { toasts, removeToast } = useToast();
 
   // Search Handler
   const handleSearch = useCallback(async (query: string) => {
@@ -89,21 +96,7 @@ const App = () => {
     setCurrentView('search');
   }, []);
 
-  // Sample for testing
-  const sampleRecipe: Recipe = {
-    id: '52772',
-    title: 'Teriyaki Chicken Casserole',
-    category: 'Chicken',
-    area: 'Japanese',
-    instructions: 'Cook chicken...',
-    image: 'https://www.themealdb.com/images/media/meals/wvpsxx1468256321.jpg',
-    youtube: 'https://www.youtube.com/watch?v=4aZr5hZXP_s',
-    source: 'https://therecipecritic.com/teriyaki-chicken-casserole/',
-    ingredients: [
-      { name: 'Chicken', measure: '500g' },
-      { name: 'Soy Sauce', measure: '3 tbsp' },
-    ],
-  };
+
 
   return (
     <AppContainer>
@@ -158,20 +151,14 @@ const App = () => {
         {!hasSearched && !isLoading && (
           <InitialState>
             <p>Search for recipes or try "Surprise Me!" to get started</p>
-            {/* Optional: Show sample card for testing */}
-            <CardTestWrapper>
-              <RecipeCard
-                recipe={sampleRecipe}
-                onClick={() => handleRecipeClick(sampleRecipe)}
-              />
-            </CardTestWrapper>
           </InitialState>
         )}
 
         {/* Loading State */}
-        {isLoading && <LoadingText>Loading...</LoadingText>}
+        {isLoading && <LoadingSkeleton />}
 
       </MainContent>
+
       <RecipeModal
         recipe={selectedRecipe}
         isOpen={isRecipeModalOpen}
@@ -186,13 +173,21 @@ const App = () => {
         onRemoveItem={removeItem}
         onClearList={clearList}
       />
+
+      {toasts.length > 0 && (
+        <ToastContainer>
+          {toasts.map((toast) => (
+            <Toast key={toast.id} toast={toast} onClose={removeToast} />
+          ))}
+        </ToastContainer>
+      )}  
+
     </AppContainer>
   );
 };
 
 export default App;
 
-// Add these new styled-components
 const AppContainer = styled.div`
   min-height: 100vh;
   background-color: #f9fafb;
@@ -275,13 +270,12 @@ const InitialState = styled.div`
   }
 `;
 
-const LoadingText = styled.p`
-  text-align: center;
-  padding: 3rem 0;
-  color: #6b7280;
-`;
-
-const CardTestWrapper = styled.div`
-  max-width: 24rem;
-  margin: 0 auto;
+const ToastContainer = styled.div`
+  position: fixed;
+  bottom: 1rem;    
+  right: 1rem;     
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;     
 `;

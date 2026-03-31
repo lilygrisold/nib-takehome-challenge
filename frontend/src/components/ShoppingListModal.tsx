@@ -69,7 +69,7 @@ const ShoppingListModal = ({
                   <ItemInfo>
                     <ItemName>{item.name}</ItemName>
                     {item.measures.length > 0 && (
-                      <ItemMeasures>({item.measures.map(m => m.original).join(', ')})</ItemMeasures>
+                      <ItemMeasures>({item.measures.map(m => m.amount === 0 ? m.unit : `${m.amount} ${m.unit}`.trim()).join(', ')})</ItemMeasures>
                     )}
                   </ItemInfo>
                   <RemoveButton 

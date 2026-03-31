@@ -1,0 +1,51 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.themealdb.com/api/json/v1/1/search.php?s=xyznonexistent
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 31 Mar 2026 05:53:14 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '16'
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      X-Powered-By:
+      - PHP/8.4.14
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=0
+      Cf-Cache-Status:
+      - DYNAMIC
+      Nel:
+      - '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'
+      Report-To:
+      - '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=kGX4umPuiE53khhMq%2Bn%2F5DmhPtF3DIsG8pOmKrGqOKnbX1z4AedV%2Fsr%2Fbzsl5zW%2BlT%2FbGPTZ0d6D73tK827lAz58JETvWQeoxPoA5dNh3fm9UfxMl%2FKnDbk1iTSyhXDMbUkrXp12geAQoUn2xBD%2F4w%3D%3D"}]}'
+      Cf-Ray:
+      - 9e4d17b239d7182f-SYD
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: "\r\n{\"meals\":null}"
+  recorded_at: Tue, 31 Mar 2026 05:53:14 GMT
+recorded_with: VCR 6.4.0
