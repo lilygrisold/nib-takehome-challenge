@@ -1,7 +1,6 @@
 import { Search, ShoppingCart, ChefHat } from 'lucide-react';
 import type { ViewState } from '../types';
 import styled from 'styled-components';
-import ShoppingListModal from './ShoppingListModal';
 
 interface NavigationProps {
   currentView: ViewState;

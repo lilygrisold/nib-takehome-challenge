@@ -86,36 +86,52 @@ const parseMeasure = (measureStr: string): ParsedMeasure => {
 };
 
 const addIngredients = useCallback((ingredients: Ingredient[]) => {
-    setItems((prevItems) => {
-        const newItems = [...prevItems];
-        
-        for (const ingredient of ingredients) {
-            const normalizedName = ingredient.name.trim();
-            if (!normalizedName) continue;
-            
-            const existingIndex = newItems.findIndex(
-                (item) => item.name.toLowerCase() === normalizedName.toLowerCase()
-            );
-            
-            if (existingIndex >= 0) {
-                // Ingredient exists - add measure if provided
-                if (ingredient.measure?.trim()) {
-                    newItems[existingIndex].measures.push(parseMeasure(ingredient.measure));
-                }
-            } else {
-                // New ingredient
-                newItems.push({
-                    name: normalizedName,
-                    measures: ingredient.measure?.trim() ? [parseMeasure(ingredient.measure)] : [],
-                });
-            }
-        } 
-        
-        // Sort alphabetically (case-insensitive)
-        return newItems.sort((a, b) =>
-            a.name.toLowerCase().localeCompare(b.name.toLowerCase())
-        );
-    });
+  setItems((prevItems) => {
+    const newItems = [...prevItems];
+    
+    for (const ingredient of ingredients) {
+      const normalizedName = ingredient.name.trim();
+      if (!normalizedName) continue;
+      
+      const existingIndex = newItems.findIndex(
+        (item) => item.name.toLowerCase() === normalizedName.toLowerCase()
+      );
+      
+      if (existingIndex >= 0) {
+        // Ingredient exists - check if same unit exists
+        if (ingredient.measure?.trim()) {
+          const newMeasure = parseMeasure(ingredient.measure);
+          const existingMeasures = newItems[existingIndex].measures;
+          
+          // Check if same unit already exists (case-insensitive)
+          const sameUnitIndex = existingMeasures.findIndex(
+            (m) => m.unit.toLowerCase() === newMeasure.unit.toLowerCase()
+          );
+          
+          if (sameUnitIndex >= 0) {
+            // Same unit found - SUM THE AMOUNTS!
+            existingMeasures[sameUnitIndex].amount += newMeasure.amount;
+            // Update the display string
+            existingMeasures[sameUnitIndex].original = 
+              `${existingMeasures[sameUnitIndex].amount} ${existingMeasures[sameUnitIndex].unit}`;
+          } else {
+            // Different unit, just add it
+            existingMeasures.push(newMeasure);
+          }
+        }
+      } else {
+        // New ingredient
+        newItems.push({
+          name: normalizedName,
+          measures: ingredient.measure?.trim() ? [parseMeasure(ingredient.measure)] : [],
+        });
+      }
+    } 
+    
+    return newItems.sort((a, b) =>
+      a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+    );
+  });
 }, []);
 
     // Remove when user clears the list

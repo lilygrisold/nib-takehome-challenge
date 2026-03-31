@@ -1,4 +1,4 @@
-import { useState, FormEvent, KeyboardEvent } from 'react';
+import { useState, type FormEvent, type KeyboardEvent } from 'react';
 import { Search, Sparkles } from 'lucide-react';
 import styled from 'styled-components';
 

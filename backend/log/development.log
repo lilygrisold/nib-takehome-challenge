@@ -69,3 +69,52 @@ Completed 200 OK in 789ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cach
 Completed 200 OK in 1154ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
 
 
+Started GET "/api/v1/recipes/search?query=beef" for ::1 at 2026-03-31 15:32:27 +1100
+  [1m[36mActiveRecord::SchemaMigration Load (2.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Backend'*/[0m
+Processing by Api::V1::RecipesController#search as */*
+  Parameters: {"query" => "beef"}
+Completed 200 OK in 1634ms (Views: 0.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/recipes/random" for ::1 at 2026-03-31 15:32:32 +1100
+Processing by Api::V1::RecipesController#random as */*
+Completed 200 OK in 490ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/recipes/random" for ::1 at 2026-03-31 15:32:37 +1100
+Processing by Api::V1::RecipesController#random as */*
+Completed 200 OK in 686ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/recipes/random" for ::1 at 2026-03-31 15:32:50 +1100
+Processing by Api::V1::RecipesController#random as */*
+Completed 200 OK in 409ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/recipes/random" for ::1 at 2026-03-31 15:32:58 +1100
+Processing by Api::V1::RecipesController#random as */*
+Completed 200 OK in 498ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/recipes/random" for ::1 at 2026-03-31 15:35:15 +1100
+Processing by Api::V1::RecipesController#random as */*
+Completed 200 OK in 834ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/recipes/random" for ::1 at 2026-03-31 15:36:14 +1100
+  [1m[36mActiveRecord::SchemaMigration Load (2.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Backend'*/[0m
+Processing by Api::V1::RecipesController#random as */*
+Completed 200 OK in 431ms (Views: 0.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/recipes/search?query=beef" for ::1 at 2026-03-31 15:36:30 +1100
+Processing by Api::V1::RecipesController#search as */*
+  Parameters: {"query" => "beef"}
+Completed 200 OK in 1307ms (Views: 0.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/recipes/random" for ::1 at 2026-03-31 15:39:32 +1100
+Processing by Api::V1::RecipesController#random as */*
+Completed 200 OK in 837ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+

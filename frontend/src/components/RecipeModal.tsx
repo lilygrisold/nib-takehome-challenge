@@ -1,5 +1,5 @@
-import { useEffect, useCallback } from 'react';
-import { X , Video, ExternalLink, Plus, ChefHat } from 'lucide-react';
+import { useEffect, useCallback, useState } from 'react';
+import { X, Video, ExternalLink, Plus, ChefHat } from 'lucide-react';
 import type { Recipe, Ingredient } from '../types';
 import styled from 'styled-components';
 
@@ -11,6 +11,8 @@ interface RecipeModalProps {
 }
 
 const RecipeModal = ({ recipe, isOpen, onClose, onAddToShoppingList }: RecipeModalProps) => {
+  const [hasAdded, setHasAdded] = useState(false);
+
   const handleEscape = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape') {
       onClose();
@@ -19,6 +21,7 @@ const RecipeModal = ({ recipe, isOpen, onClose, onAddToShoppingList }: RecipeMod
 
   useEffect(() => {
     if (isOpen) {
+      setHasAdded(false);
       document.addEventListener('keydown', handleEscape);
       document.body.style.overflow = 'hidden';
     }
@@ -29,7 +32,6 @@ const RecipeModal = ({ recipe, isOpen, onClose, onAddToShoppingList }: RecipeMod
   }, [isOpen, handleEscape]);
 
   if (!isOpen || !recipe) return null;
-
 
   return (
     <ModalOverlay role="dialog" aria-modal="true" aria-labelledby="recipe-modal-title">
@@ -59,68 +61,76 @@ const RecipeModal = ({ recipe, isOpen, onClose, onAddToShoppingList }: RecipeMod
         </HeaderSection>
 
         <ContentSection>
-            <Column>
-              <SectionTitle>Ingredients</SectionTitle>
-              <IngredientsList>
-                {recipe.ingredients.map((ingredient, index) => (
-                  <IngredientItem key={index}>
-                    <IngredientName>{ingredient.name}</IngredientName>
-                    {ingredient.measure && (
-                      <IngredientMeasure>{ingredient.measure}</IngredientMeasure>
-                    )}
-                  </IngredientItem>
-                ))}
-              </IngredientsList>
-              
-              <AddButton onClick={() => onAddToShoppingList(recipe.ingredients)}>
-                <Plus style={{ height: '1.25rem', width: '1.25rem' }} />
-                <span>Add to Shopping List</span>
-              </AddButton>
-    
-              <SectionTitle>Instructions</SectionTitle>
-              <InstructionsContent>
-                {recipe.instructions.split('\n').map((paragraph, index) => (
-                  paragraph.trim() && (
-                    <InstructionParagraph key={index}>
-                      {paragraph.trim()}
-                    </InstructionParagraph>
-                  )
-                ))}
-              </InstructionsContent>
+          <Column>
+            <SectionTitle>Ingredients</SectionTitle>
+            <IngredientsList>
+              {recipe.ingredients.map((ingredient, index) => (
+                <IngredientItem key={index}>
+                  <IngredientName>{ingredient.name}</IngredientName>
+                  {ingredient.measure && (
+                    <IngredientMeasure>{ingredient.measure}</IngredientMeasure>
+                  )}
+                </IngredientItem>
+              ))}
+            </IngredientsList>
+            
+            <AddButton 
+              onClick={() => {
+                if (hasAdded) return;
+                setHasAdded(true);
+                setTimeout(() => {
+                  onAddToShoppingList(recipe.ingredients);
+                }, 200);
+              }}
+              disabled={hasAdded}
+              style={{ opacity: hasAdded ? 0.5 : 1 }}
+            >
+              <Plus style={{ height: '1.25rem', width: '1.25rem' }} />
+              <span>{hasAdded ? 'Added!' : 'Add to Shopping List'}</span>
+            </AddButton>
+  
+            <SectionTitle>Instructions</SectionTitle>
+            <InstructionsContent>
+              {recipe.instructions.split('\n').map((paragraph, index) => (
+                paragraph.trim() && (
+                  <InstructionParagraph key={index}>
+                    {paragraph.trim()}
+                  </InstructionParagraph>
+                )
+              ))}
+            </InstructionsContent>
 
-              <LinksContainer>
-                {recipe.youtube && (
-                  <ExternalLinkStyled 
-                    href={recipe.youtube} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    $color="red"
-                  >
-                    <Video style={{ height: '1.25rem', width: '1.25rem'}} />
-                    <span>Watch on YouTube</span>
-                  </ExternalLinkStyled>
-                )}
-                {recipe.source && (
-                  <ExternalLinkStyled 
-                    href={recipe.source} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    $color="blue"
-                  >
-                    <ExternalLink style={{ height: '1.25rem', width: '1.25rem' }} />
-                    <span>View Source</span>
-                  </ExternalLinkStyled>
-                )}
-              </LinksContainer>
-            </Column>
-         
+            <LinksContainer>
+              {recipe.youtube && (
+                <ExternalLinkStyled 
+                  href={recipe.youtube} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  $color="red"
+                >
+                  <Video style={{ height: '1.25rem', width: '1.25rem'}} />
+                  <span>Watch on YouTube</span>
+                </ExternalLinkStyled>
+              )}
+              {recipe.source && (
+                <ExternalLinkStyled 
+                  href={recipe.source} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  $color="blue"
+                >
+                  <ExternalLink style={{ height: '1.25rem', width: '1.25rem' }} />
+                  <span>View Source</span>
+                </ExternalLinkStyled>
+              )}
+            </LinksContainer>
+          </Column>
         </ContentSection>
       </ModalContainer>
     </ModalOverlay>
   );
 };
 
-// Styled Components
 const ModalOverlay = styled.div`
   position: fixed;
   inset: 0;
@@ -144,7 +154,7 @@ const ModalContainer = styled.div`
   border-radius: 1rem;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   width: 100%;
-  max-width: 56rem; /* max-w-4xl */
+  max-width: 56rem;
   max-height: 90vh;
   overflow: hidden;
   display: flex;
@@ -219,7 +229,7 @@ const ContentSection = styled.div`
 `;
 
 const Column = styled.div`
-    margin: 1.5rem;
+  margin: 1.5rem;
 `;
 
 const SectionTitle = styled.h3`
@@ -229,18 +239,16 @@ const SectionTitle = styled.h3`
 `;
 
 const IngredientsList = styled.ul`
-
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 `;
 
 const IngredientItem = styled.li`
-
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem;
+  padding: 0.75rem 0;
   border-bottom: 1px solid #f3f4f6;
 `;
 
@@ -268,8 +276,12 @@ const AddButton = styled.button`
   gap: 0.5rem;
   transition: background-color 150ms ease;
   
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: #1d4ed8;
+  }
+  
+  &:disabled {
+    cursor: not-allowed;
   }
 `;
 

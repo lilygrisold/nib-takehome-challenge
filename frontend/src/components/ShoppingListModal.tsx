@@ -24,6 +24,7 @@ const ShoppingListModal = ({
     }
   }, [onClose]);
 
+  
   useEffect(() => {
     if (isOpen) {
       document.addEventListener('keydown', handleEscape);
