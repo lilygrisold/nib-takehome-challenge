@@ -63,4 +63,4 @@ group :test do
   gem 'shoulda-matchers'
   gem 'database_cleaner-active_record'
 end
-gem "httparty", "~> 0.24.2"
+

@@ -1,4 +1,4 @@
-import { Search, ShoppingCart, ChefHat } from 'lucide-react';
+import { Search, ShoppingCart, ChefHat, Sparkles } from 'lucide-react';
 import type { ViewState } from '../types';
 import styled from 'styled-components';
 
@@ -7,9 +7,10 @@ interface NavigationProps {
   onViewChange: (view: ViewState) => void;
   shoppingListCount: number;
   onShoppingListClick: () => void;
+  onSurpriseMe: () => void;
 }
 
-const Navigation = ({ currentView, onViewChange, shoppingListCount, onShoppingListClick }: NavigationProps) => {
+const Navigation = ({ currentView, onViewChange, shoppingListCount, onShoppingListClick, onSurpriseMe}: NavigationProps) => {
   return (
     <NavBar>
       <Container>
@@ -27,6 +28,15 @@ const Navigation = ({ currentView, onViewChange, shoppingListCount, onShoppingLi
             >
               <Search style={{ height: '1.25rem', width: '1.25rem' }} />
               <span>Search</span>
+            </NavButton>
+
+            <NavButton 
+              $isActive={false} // Not a view, so never active
+              onClick={onSurpriseMe}
+              aria-label="Surprise me with a random recipe"
+            >
+              <Sparkles style={{ height: '1.25rem', width: '1.25rem' }} />
+              <span>Surprise Me</span>
             </NavButton>
             
             <NavButton 

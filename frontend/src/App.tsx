@@ -105,6 +105,7 @@ const App = () => {
         onViewChange={handleViewChange}
         shoppingListCount={getItemCount()}
         onShoppingListClick={() => setIsShoppingOpen(true)}
+        onSurpriseMe={handleSurpriseMe} 
       />
 
       <MainContent>
@@ -221,7 +222,6 @@ const ErrorMessage = styled.div`
   background-color: #fef2f2;
   border: 1px solid #fecaca;
   border-radius: 0.5rem;
-  color: #dc2626;
 `;
 
 const ResultsSection = styled.div`
